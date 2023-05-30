@@ -14,17 +14,27 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
-@dp.message_handler(commands=['start', 'help'])
+@dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    await message.reply("Hi, I'm AOS!\nPowered by aiogram.")
+    
+    await message.reply("Hi, I'm AOS!")
+    
+@dp.message_handler(commands=['help'])
+async def send_welcome(message: types.Message):
+    
+    await message.reply('No.')
 
 @dp.message_handler()
 async def echo(message: types.Message):
     
-    await message.answer(message.text)
+    if (message.text == '1000-7'):
+        text = ''
+        for i in range(1000, 0, -7):
+            text += f'{i} - 7\n'
+        await message.answer(text)
+    else:
+        await message.answer(message.text)
+    
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
